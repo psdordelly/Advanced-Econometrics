@@ -3,6 +3,38 @@
 ##   Paola Sastre Dordelly
 #*************************************************************
 
+
+# Yaw Alignment of Wind Turbines
+# The output of a wind turbine depends, among other factors, on the proper alignment
+# of the rotor. Ideally, the rotor should always be facing the wind directly as the turbine
+# is less efficient when it ‘sees’ the wind arriving at an angle. In particular, the relative
+# efficiency of a wind turbine is well approximated by the function
+# RE_t = 100 *(1 -((c^2y_t^2)/(1+c^2y_t^2)))
+# where c is approx 0.1. The relative efficiency of the turbine at time t, denoted RE_t, is a number
+# between 100 (maximum efficiency) and 0 (minimum efficiency). The variable y_t = (w_t - r_t)
+# is the wind direction offset, which is a measure of the discrepancy between the wind direction
+# wt and the position of the rotor r_t. A zero offset (yt Æ 0) is optimal and occurs
+# when the rotor’s position rt is perfectly aligned with the incoming wind’s direction wt,
+# The extreme case of y_t = inf, occurs as the position of the rotor’s position r_t becomes
+# progressively worse and approaches a 90 degree angle relative to the wind’s direction wt.
+# The wind direction itself is typically measured using a simple wind vane installed at the
+# top of (or near) the wind turbine. Unfortunately, measured wind direction w_t is often
+# noisy and an attempt to align the rotor in reaction to any gush of wind coming sideways
+# would render the wind turbine less efficient. Instead, observation-driven filters such as
+# the one below are used to filter the wind direction carefully and determine the optimal
+# position of the rotor: r_{t+1} = alpha * y_t + beta 
+# Obviously, a good filter is capable of separating the noise component from the fundamental
+# slow shift in wind direction. This allows wind turbines to be more efficient in
+# producing electricity.
+# A wind turbine manufacturer is currently setting the parameters alpha and beta to the values
+# some initial values. They argue that, with this parameter configuration, their wind turbines
+# can smoothly adjust to changes in the wind direction, achieve a small offset yt,
+# and an average relative efficiency above 90. They are however interested in improving
+# further the efficiency of their turbines by fine-tuning these parameters.
+# The dataset wind_data.mat (also available as a .csv file) contains a one hour time series
+# # of wind direction wt, measured in seconds, at a specific location.
+# The tasks can be find after the housekeeping operations.
+
 ### 0. HOUSEKEEPING ####
 #***********************
 
